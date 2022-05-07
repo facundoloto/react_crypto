@@ -1,30 +1,28 @@
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
 const Crypto = () => {
-  // 1 - setear los hooks
+ 
   const [ search, setSearch ] = useState("")  
   const [ cryptos, setCryptos ] = useState( [] )
-  //2 - función para traer los datos
   const endpoint = 'https://api.coingecko.com/api/v3/coins' 
+
   const showData = () => {
     axios.get(endpoint).then( (res) => {
-        //console.log(res.data)
         setCryptos(res.data)
     })
   }
-  //useEffect
+
   useEffect( ()=> {
     showData()
   },[])
-  //3 - función de búsqueda
+
   const searcher = (e) => {
       setSearch(e.target.value)
-      //console.log(e.target.value)
   }
-  //4 - filtrar los datos
+
   const results = !search ? cryptos : cryptos.filter( (val)=> val.name.toLowerCase().includes(search.toLocaleLowerCase()) )
-  //renderizamos la vista
+
   return (
     <>
     <input value={search} onChange={searcher} type='text' placeholder='Search...' className='form-control' />
